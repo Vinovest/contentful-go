@@ -19,9 +19,9 @@ type Asset struct {
 
 // AssetFields model
 type AssetFields struct {
-	Title       map[string]string `json:"title,omitempty"`
-	Description map[string]string `json:"description,omitempty"`
-	File        map[string]*File  `json:"file,omitempty"`
+	Title       string `json:"title,omitempty"`
+	Description string `json:"description,omitempty"`
+	File        *File  `json:"file,omitempty"`
 }
 
 // File represents a Contentful File

@@ -36,7 +36,7 @@ func TestAssetsService_List(t *testing.T) {
 	assertions.Nil(err)
 	asset := collection.ToAsset()
 	assertions.Equal(3, len(asset))
-	assertions.Equal("hehehe", asset[0].Fields.Title["en-US"])
+	assertions.Equal("hehehe", asset[0].Fields.Title)
 }
 
 func TestAssetsService_ListPublished(t *testing.T) {
@@ -65,7 +65,7 @@ func TestAssetsService_ListPublished(t *testing.T) {
 	assertions.Nil(err)
 	asset := collection.ToAsset()
 	assertions.Equal(3, len(asset))
-	assertions.Equal("hehehe", asset[0].Fields.Title["en-US"])
+	assertions.Equal("hehehe", asset[0].Fields.Title)
 }
 
 func TestAssetsService_Get(t *testing.T) {
@@ -92,7 +92,7 @@ func TestAssetsService_Get(t *testing.T) {
 
 	asset, err := cma.Assets.Get(spaceID, "1x0xpXu4pSGS4OukSyWGUK")
 	assertions.Nil(err)
-	assertions.Equal("hehehe", asset.Fields.Title["en-US"])
+	assertions.Equal("hehehe", asset.Fields.Title)
 }
 
 func TestAssetsService_Get_2(t *testing.T) {
@@ -133,8 +133,8 @@ func TestAssetsService_Upsert_Create(t *testing.T) {
 		err := json.NewDecoder(r.Body).Decode(&payload)
 		assertions.Nil(err)
 		fields := payload["fields"].(map[string]interface{})
-		title := fields["title"].(map[string]interface{})
-		assertions.Equal("hehehe", title["en-US"])
+		title := fields["title"].(string)
+		assertions.Equal("hehehe", title)
 
 		w.WriteHeader(201)
 		_, _ = fmt.Fprintln(w, readTestData("asset_1.json"))
@@ -151,26 +151,18 @@ func TestAssetsService_Upsert_Create(t *testing.T) {
 	asset := &Asset{
 		Locale: "en-US",
 		Fields: &AssetFields{
-			Title: map[string]string{
-				"en-US": "hehehe",
-				"de":    "hehehe-de",
-			},
-			Description: map[string]string{
-				"en-US": "asdfasf",
-				"de":    "asdfasf-de",
-			},
-			File: map[string]*File{
-				"en-US": {
-					FileName:    "doge.jpg",
-					ContentType: "image/jpeg",
-					URL:         "//images.contentful.com/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg",
-					UploadURL:   "",
-					Details: &FileDetails{
-						Size: 522943,
-						Image: &ImageFields{
-							Width:  5800,
-							Height: 4350,
-						},
+			Title:       "hehehe",
+			Description: "asdfasf",
+			File: &File{
+				FileName:    "doge.jpg",
+				ContentType: "image/jpeg",
+				URL:         "//images.contentful.com/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg",
+				UploadURL:   "",
+				Details: &FileDetails{
+					Size: 522943,
+					Image: &ImageFields{
+						Width:  5800,
+						Height: 4350,
 					},
 				},
 			},
@@ -179,8 +171,8 @@ func TestAssetsService_Upsert_Create(t *testing.T) {
 
 	err := cma.Assets.Upsert(spaceID, asset)
 	assertions.Nil(err)
-	assertions.Equal("hehehe", asset.Fields.Title["en-US"])
-	assertions.Equal("d3b8dad44e5066cfb805e2357469ee64.png", asset.Fields.File["en-US"].FileName)
+	assertions.Equal("hehehe", asset.Fields.Title)
+	assertions.Equal("d3b8dad44e5066cfb805e2357469ee64.png", asset.Fields.File.FileName)
 }
 
 func TestAssetsService_Upsert_Update(t *testing.T) {
@@ -196,10 +188,10 @@ func TestAssetsService_Upsert_Update(t *testing.T) {
 		err := json.NewDecoder(r.Body).Decode(&payload)
 		assertions.Nil(err)
 		fields := payload["fields"].(map[string]interface{})
-		title := fields["title"].(map[string]interface{})
-		description := fields["description"].(map[string]interface{})
-		assertions.Equal("updated", title["en-US"])
-		assertions.Equal("also updated", description["en-US"])
+		title := fields["title"].(string)
+		description := fields["description"].(string)
+		assertions.Equal("updated", title)
+		assertions.Equal("also updated", description)
 
 		w.WriteHeader(200)
 		_, _ = fmt.Fprintln(w, readTestData("asset_updated.json"))
@@ -216,13 +208,13 @@ func TestAssetsService_Upsert_Update(t *testing.T) {
 	asset, err := assetFromTestData("asset_1.json")
 	assertions.Nil(err)
 
-	asset.Fields.Title["en-US"] = "updated"
-	asset.Fields.Description["en-US"] = "also updated"
+	asset.Fields.Title = "updated"
+	asset.Fields.Description = "also updated"
 
 	err = cma.Assets.Upsert(spaceID, asset)
 	assertions.Nil(err)
-	assertions.Equal("updated", asset.Fields.Title["en-US"])
-	assertions.Equal("also updated", asset.Fields.Description["en-US"])
+	assertions.Equal("updated", asset.Fields.Title)
+	assertions.Equal("also updated", asset.Fields.Description)
 }
 
 func TestAssetsService_Delete(t *testing.T) {

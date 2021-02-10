@@ -1,7 +1,6 @@
 {
   "fields": {
     "file": {
-      "en-US": {
         "fileName": "d3b8dad44e5066cfb805e2357469ee64.png",
         "contentType": "image/png",
         "details": {
@@ -12,28 +11,9 @@
           "size": 6198
         },
         "url": "//images.flinkly.com/222ru4k10hm8/3HNzx9gvJScKku4UmcekYw/997663077456077dde5b5be9bd3c1386/d3b8dad44e5066cfb805e2357469ee64.png"
-      },
-      "de": {
-        "fileName": "d3b8dad44e5066cfb805e2357469ee64.png",
-        "contentType": "image/png",
-        "details": {
-          "image": {
-            "width": 206,
-            "height": 79
-          },
-          "size": 6198
-        },
-        "url": "//images.flinkly.com/222ru4k10hm8/3HNzx9gvJScKku4UmcekYw/997663077456077dde5b5be9bd3c1386/d3b8dad44e5066cfb805e2357469ee64.png-de"
-      }
     },
-    "title": {
-      "en-US": "hehehe",
-      "de": "hehehe-de"
-    },
-    "description": {
-      "en-US": "asdfasf",
-      "de": "asdfasf-de"
-    }
+    "title":"hehehe",
+    "description":  "asdfasf"
   },
   "sys": {
     "id": "3HNzx9gvJScKku4UmcekYw",
